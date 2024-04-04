@@ -50,8 +50,8 @@ const Index = () => {
 
   return (
     <Box>
-      <Flex bg="blue.500" p={4} color="white">
-        <Heading size="md">Online Grocery Store</Heading>
+      <Flex bg="green.500" p={4} color="white">
+        <Heading size="md">CARTZ</Heading>
         <Spacer />
         <IconButton icon={<FaShoppingCart />} variant="ghost" onClick={onOpen} aria-label="Cart" />
         <IconButton icon={<FaUser />} variant="ghost" ml={2} aria-label="Account" />
