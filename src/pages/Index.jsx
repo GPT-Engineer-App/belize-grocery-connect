@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Heading, Text, Image, Button, Input, Grid, GridItem, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, useDisclosure, FormControl, FormLabel, Select, Flex, Spacer, IconButton, useToast } from "@chakra-ui/react";
+import StoreSelector from "../components/StoreSelector";
 import { FaShoppingCart, FaUser, FaSearch, FaTrash } from "react-icons/fa";
 
 const products = [
@@ -18,9 +19,15 @@ const products = [
   // Add more products...
 ];
 
+const stores = [
+  { id: 1, name: "Store A" },
+  { id: 2, name: "Store B" },
+];
+
 const Index = () => {
   const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStore, setSelectedStore] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -39,7 +46,7 @@ const Index = () => {
     setCart(cart.filter((item) => item.id !== productId));
   };
 
-  const filteredProducts = products.filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredProducts = products.filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()) && (!selectedStore || product.storeId === selectedStore));
 
   return (
     <Box>
@@ -51,8 +58,9 @@ const Index = () => {
       </Flex>
 
       <Box p={4}>
-        <Flex mb={4}>
-          <Input placeholder="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        <Flex mb={4} alignItems="center">
+          <StoreSelector stores={stores} selectedStore={selectedStore} onStoreSelect={setSelectedStore} />
+          <Input placeholder="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} ml={4} />
           <IconButton icon={<FaSearch />} ml={2} aria-label="Search" onClick={() => {}} />
         </Flex>
 
